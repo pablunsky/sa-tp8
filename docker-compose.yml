@@ -6,10 +6,10 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD: sa201603191
-      - MYSQL_DATABASE: tp8
-      - MYSQL_USER: user
-      - MYSQL_PASSWORD: sa201603191
+      MYSQL_ROOT_PASSWORD: sa201603191
+      MYSQL_DATABASE: tp8
+      MYSQL_USER: user
+      MYSQL_PASSWORD: sa201603191
   server:
     build: SERVER/.
     command: node app.js
