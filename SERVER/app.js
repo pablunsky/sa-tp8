@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const app = express();
 
 var mysql = require('mysql');
 
@@ -11,24 +12,27 @@ var con = mysql.createConnection({
     database: "tp8"
 });
 
-con.connect(function (err)
-{
-    if (err) throw err;
-    console.log("Conexion realizada");
-    var sql = "CREATE TABLE datos (id INT NOT NULL AUTOINCREMENT PRIMARY KEY, time DATETIME NOT NULL);";
-    con.query(sql, function (err, result)
-    {
-        if (err) throw err;
-        console.log("Tabla inicializada");
-    });
-});
-
 const PORT = 80;
 const HOST = '0.0.0.0';
 
-const app = express();
+var connected = false;
+
 app.get('/', (req, res) =>
 {
+    if (!connected)
+    {
+        con.connect(function (err)
+        {
+            if (err) throw err;
+            console.log("Conexion realizada");
+            var sql = "CREATE TABLE datos (id INT NOT NULL AUTOINCREMENT PRIMARY KEY, time DATETIME NOT NULL);";
+            con.query(sql, function (err, result)
+            {
+                if (err) throw err;
+                console.log("Tabla inicializada");
+            });
+        });
+    }
     con.query('INSERT INTO datos (NOW());', function (err, rows, fields)
     {
         if (err) throw err;
