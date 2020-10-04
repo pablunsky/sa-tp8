@@ -23,13 +23,22 @@ app.get('/', (req, res) =>
     {
         con.connect(function (err)
         {
-            if (err) throw err;
+            if (err)
+            {
+                console.log(err);
+                res.json({ error: err });
+            }
             console.log("Conexion realizada");
             var sql = "CREATE TABLE datos (id INT NOT NULL AUTOINCREMENT PRIMARY KEY, time DATETIME NOT NULL);";
             con.query(sql, function (err, result)
             {
-                if (err) throw err;
+                if (err)
+                {
+                    console.log(err);
+                    res.json({ error: err });
+                }
                 console.log("Tabla inicializada");
+                connected = true;
             });
         });
     }
@@ -39,7 +48,11 @@ app.get('/', (req, res) =>
         console.log('Fila insertada');
         con.query('SELECT * from datos;', function (err, rows, fields)
         {
-            if (err) throw err;
+            if (err)
+            {
+                console.log(err);
+                res.json({ error: err });
+            }
             res.json(rows);
         });
     });
