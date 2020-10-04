@@ -66,7 +66,7 @@ app.get('/', (req, res) =>
     }
     else
     {
-        con.query('INSERT INTO datos (log_time) VALUES (NOW())', function (err, rows, fields)
+        con.query('INSERT INTO datos (logtime) VALUES (NOW())', function (err, rows, fields)
         {
             if (err)
             {
@@ -75,7 +75,7 @@ app.get('/', (req, res) =>
                 return;
             }
             console.log('Fila insertada');
-            con.query('SELECT * from datos', function (err, rows, fields)
+            con.query('SELECT * FROM datos', function (err, rows, fields)
             {
                 if (err)
                 {
