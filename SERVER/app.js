@@ -30,7 +30,7 @@ app.get('/', (req, res) =>
                 return;
             }
             console.log("Conexion realizada");
-            var sql = "CREATE TABLE datos (id INT NOT NULL AUTOINCREMENT PRIMARY KEY, time DATETIME NOT NULL);";
+            var sql = "CREATE TABLE datos (id INT NOT NULL AUTOINCREMENT PRIMARY KEY, log_time DATETIME NOT NULL)";
             con.query(sql, function (err, result)
             {
                 if (err)
@@ -44,7 +44,7 @@ app.get('/', (req, res) =>
             });
         });
     }
-    con.query('INSERT INTO datos (NOW());', function (err, rows, fields)
+    con.query('INSERT INTO datos (log_time) VALUES (NOW())', function (err, rows, fields)
     {
         if (err)
         {
@@ -53,7 +53,7 @@ app.get('/', (req, res) =>
             return;
         }
         console.log('Fila insertada');
-        con.query('SELECT * from datos;', function (err, rows, fields)
+        con.query('SELECT * from datos', function (err, rows, fields)
         {
             if (err)
             {
