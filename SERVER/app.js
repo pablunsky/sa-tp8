@@ -41,28 +41,51 @@ app.get('/', (req, res) =>
                 }
                 console.log("Tabla inicializada");
                 connected = true;
+
+                con.query('INSERT INTO datos (log_time) VALUES (NOW())', function (err, rows, fields)
+                {
+                    if (err)
+                    {
+                        console.log(err);
+                        res.json({ error: err });
+                        return;
+                    }
+                    console.log('Fila insertada');
+                    con.query('SELECT * from datos', function (err, rows, fields)
+                    {
+                        if (err)
+                        {
+                            console.log(err);
+                            res.json({ error: err });
+                        }
+                        res.json(rows);
+                    });
+                });
             });
         });
     }
-    con.query('INSERT INTO datos (log_time) VALUES (NOW())', function (err, rows, fields)
+    else
     {
-        if (err)
-        {
-            console.log(err);
-            res.json({ error: err });
-            return;
-        }
-        console.log('Fila insertada');
-        con.query('SELECT * from datos', function (err, rows, fields)
+        con.query('INSERT INTO datos (log_time) VALUES (NOW())', function (err, rows, fields)
         {
             if (err)
             {
                 console.log(err);
                 res.json({ error: err });
+                return;
             }
-            res.json(rows);
+            console.log('Fila insertada');
+            con.query('SELECT * from datos', function (err, rows, fields)
+            {
+                if (err)
+                {
+                    console.log(err);
+                    res.json({ error: err });
+                }
+                res.json(rows);
+            });
         });
-    });
+    }
 });
 
 app.listen(PORT, HOST);
