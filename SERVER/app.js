@@ -6,7 +6,7 @@ const app = express();
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
-    host: "localhost",
+    host: "db",
     user: "user",
     password: "sa201603191",
     database: "tp8"
