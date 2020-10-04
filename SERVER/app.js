@@ -30,7 +30,7 @@ app.get('/', (req, res) =>
                 return;
             }
             console.log("Conexion realizada");
-            var sql = "CREATE TABLE datos (id INT NOT NULL AUTOINCREMENT PRIMARY KEY, log_time DATETIME NOT NULL)";
+            var sql = "CREATE TABLE datos (id INT AUTO_INCREMENT PRIMARY KEY, logtime DATETIME)";
             con.query(sql, function (err, result)
             {
                 if (err)
@@ -42,7 +42,7 @@ app.get('/', (req, res) =>
                 console.log("Tabla inicializada");
                 connected = true;
 
-                con.query('INSERT INTO datos (log_time) VALUES (NOW())', function (err, rows, fields)
+                con.query('INSERT INTO datos (logtime) VALUES (NOW())', function (err, rows, fields)
                 {
                     if (err)
                     {
@@ -51,7 +51,7 @@ app.get('/', (req, res) =>
                         return;
                     }
                     console.log('Fila insertada');
-                    con.query('SELECT * from datos', function (err, rows, fields)
+                    con.query('SELECT * FROM datos', function (err, rows, fields)
                     {
                         if (err)
                         {
