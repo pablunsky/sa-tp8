@@ -27,6 +27,7 @@ app.get('/', (req, res) =>
             {
                 console.log(err);
                 res.json({ error: err });
+                return;
             }
             console.log("Conexion realizada");
             var sql = "CREATE TABLE datos (id INT NOT NULL AUTOINCREMENT PRIMARY KEY, time DATETIME NOT NULL);";
@@ -36,6 +37,7 @@ app.get('/', (req, res) =>
                 {
                     console.log(err);
                     res.json({ error: err });
+                    return;
                 }
                 console.log("Tabla inicializada");
                 connected = true;
@@ -44,7 +46,12 @@ app.get('/', (req, res) =>
     }
     con.query('INSERT INTO datos (NOW());', function (err, rows, fields)
     {
-        if (err) throw err;
+        if (err)
+        {
+            console.log(err);
+            res.json({ error: err });
+            return;
+        }
         console.log('Fila insertada');
         con.query('SELECT * from datos;', function (err, rows, fields)
         {
