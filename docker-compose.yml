@@ -15,3 +15,5 @@ services:
     command: node app.js
     ports:
       - "80:80"
+    depends_on:
+      - db
